@@ -1,7 +1,7 @@
 const { identifierToUrlPath } = require(`./jacdac-ts/dist/jacdac.cjs`)
 
 const maxImageWidth = 800
-const siteUrl = "https://microsoft.github.io"
+const siteUrl = "https://jacdac.github.io"
 const pathPrefix = "/jacdac-docs"
 
 const wsl = !!process.env.WSL_DISTRO_NAME || !!process.env.CODESPACE_NAME
@@ -15,7 +15,7 @@ module.exports = {
     siteMetadata: {
         title: SITE_TITLE,
         description: SITE_DESCRIPTION,
-        author: `Microsoft`,
+        author: `Jacdac`,
         siteUrl: siteUrl,
     },
     pathPrefix: pathPrefix,
@@ -98,6 +98,14 @@ module.exports = {
                     remarkPlugins: [require(`remark-gfm`)],
                 },
                 gatsbyRemarkPlugins: [
+                    wsl || offline
+                        ? undefined
+                        : {
+                              resolve: "gatsby-remark-makecode",
+                              options: {
+                                  editorUrl: "https://makecode.microbit.org/",
+                              },
+                          },
                     "gatsby-remark-autolink-headers",
                     "gatsby-remark-external-links",
                     {
