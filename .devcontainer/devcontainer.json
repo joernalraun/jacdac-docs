@@ -30,49 +30,35 @@
     "customizations": {
         "codespaces": {
             "repositories": {
-                "microsoft/jacdac-ts": {
+                "jacdac/jacdac-ts": {
                     "permissions": {
                         "contents": "write",
                         "pull_requests": "write",
                         "workflows": "write"
                     }
                 },
-                "microsoft/jacdac-ddk": {
+                "jacdac/react-jacdac": {
                     "permissions": {
                         "contents": "write",
                         "pull_requests": "write",
                         "workflows": "write"
                     }
                 },
-                "microsoft/react-jacdac": {
+                "jacdac/jacdac-cli": {
                     "permissions": {
                         "contents": "write",
                         "pull_requests": "write",
                         "workflows": "write"
                     }
                 },
-                "microsoft/jacdac-cli": {
+                "jacdac/pxt-jacdac": {
                     "permissions": {
                         "contents": "write",
                         "pull_requests": "write",
                         "workflows": "write"
                     }
                 },
-                "microsoft/pxt-jacdac": {
-                    "permissions": {
-                        "contents": "write",
-                        "pull_requests": "write",
-                        "workflows": "write"
-                    }
-                },
-                "microsoft/jacdac": {
-                    "permissions": {
-                        "contents": "write",
-                        "pull_requests": "write",
-                        "workflows": "write"
-                    }
-                },
-                "microsoft/jacdac-c": {
+                "jacdac/jacdac": {
                     "permissions": {
                         "contents": "write",
                         "pull_requests": "write",
