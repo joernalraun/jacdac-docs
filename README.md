@@ -79,6 +79,7 @@ yarn buildspecs
 ```
 
 This script will update the directory jacdac-ts/jacdac-spec/dist as well as client bindings (for changes to a service or addition of a new service). In particular, the distribution will contain updates for 
+
 - jacdac-ts, which depends on jacdac-spec
 - jacdac-docs, which depends on jacdac-ts and many other repos
 - pxt-jacdac, the MakeCode extension for Jacdac.
