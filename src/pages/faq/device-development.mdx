@@ -24,7 +24,7 @@ You need to decide on the best [power supply scheme](/ddk/design/electrical/#pow
 
 Yes! We provide a number of Jacdac device hardware and firmware reference designs with an open license for the community to use as-is and modify. If you do this, we'd love it if you share the things you build so that others may benefit in turn—but don't feel obligated to do this.
 
-* [Jacdac DDK repository](https://github.com/microsoft/jacdac-ddk/tree/main/electronics)
+* [Jacdac DDK repository](https://github.com/jacdac/jacdac-ddk/tree/main/electronics)
 
 ## How do I get a new product identifier?
 
@@ -48,7 +48,7 @@ Other than the above requirements, modules can have different shapes. Two exampl
 
 The Jacdac bus (JD_PWR) nominally runs at V<sub>out(nom)</sub> = 5.0V, see the [Jacdac electrical specification](/reference/electrical-spec/#power-providers). However, due to cable resistance there will be a voltage drop on both the out-bound current path and the return current path. At higher currents, this can significantly reduce the bus voltage seen by a [power consuming device](/ddk/design/electrical/#power-supply-sharing).
 
-Power consuming devices must therefore be designed to operate from a worst-case voltage of V<sub>in(min)</sub>=3.5V. Since devices have to signal at V<sub>OH(nom)</sub> = 3.3V, it is often convenient to use a low drop-out linear regulator (LDO) to regulate the bus voltage to 3.3V for a device's digital logic, for example [these suggested parts](https://github.com/microsoft/jacdac-ddk/tree/main/electronics/generic/suggested-components#linear-regulator-ldo).
+Power consuming devices must therefore be designed to operate from a worst-case voltage of V<sub>in(min)</sub>=3.5V. Since devices have to signal at V<sub>OH(nom)</sub> = 3.3V, it is often convenient to use a low drop-out linear regulator (LDO) to regulate the bus voltage to 3.3V for a device's digital logic, for example [these suggested parts](https://github.com/jacdac/jacdac-ddk/tree/main/electronics/generic/suggested-components#linear-regulator-ldo).
 
 ## What voltage should a power provider supply?
 
@@ -87,7 +87,7 @@ There are two reasons why the current is limited to a relatively low value on th
 We don’t ever want more than 1A flowing through the bus due to the rating on the cable, and if we had simply had 1A available on power supplies then users could easily exceed this by connecting more than one together. We have two solutions to this:
 
 1. We limit power supplies to a smaller current. Users can still exceed 1A, but they’d need to connect a lot of supplies together so we think it’s unlikely in practice. The maximum value of this smaller current is I<sub>out(lc)</sub>, see [here](/reference/electrical-spec/#power-providers). Low-cost current limiting chips often have a large tolerance, and one of the parts that's used on Jacdaptors is 75mA ±25mA, so in some cases current might be limited to 50mA.
-2. We do allow power supplies to supply 1A each (I<sub>out(hc)</sub>), but in that case we put intelligence into them so they can detect if more than one is plugged in, in which case all but one of them stop supplying power. This requires firmware running the [power service](https://microsoft.github.io/jacdac-docs/services/power/) in the power supply. In the case of the micro:bit Jacdaptor this would add cost because an MCU would need to be added.
+2. We do allow power supplies to supply 1A each (I<sub>out(hc)</sub>), but in that case we put intelligence into them so they can detect if more than one is plugged in, in which case all but one of them stop supplying power. This requires firmware running the [power service](https://jacdac.github.io/jacdac-docs/services/power/) in the power supply. In the case of the micro:bit Jacdaptor this would add cost because an MCU would need to be added.
 
 ### Secondly, to meet the micro:bit accessory specification
 

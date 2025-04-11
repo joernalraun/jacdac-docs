@@ -40,43 +40,11 @@ export default function Footer() {
     return (
         <Root role="contentinfo" className={classes.footer}>
             <a
-                href="https://github.com/microsoft/jacdac/discussions"
+                href="https://github.com/jacdac/jacdac/discussions"
                 target="_blank"
                 rel="noopener noreferrer"
             >
                 Contact Us
-            </a>
-            |
-            <a
-                href="https://go.microsoft.com/fwlink/?LinkId=521839"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                Privacy &amp; Cookies
-            </a>
-            |
-            <a
-                href="https://www.microsoft.com/en-us/legal/intellectualproperty/copyright"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                Terms Of Use
-            </a>
-            |
-            <a
-                href="https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                Trademarks
-            </a>
-            |{" "}
-            <a
-                href="https://go.microsoft.com/fwlink/?linkid=2259814"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                Consumer Health Privacy
             </a>
             {repo && sha && (
                 <>
@@ -91,10 +59,6 @@ export default function Footer() {
                 </>
             )}
             | <TraceSaveButton variant="link" />
-            &nbsp;
-            <Typography component="span" variant="inherit">
-                © {new Date().getFullYear()} Microsoft Corporation
-            </Typography>
         </Root>
     )
 }

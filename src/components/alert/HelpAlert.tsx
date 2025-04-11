@@ -10,11 +10,10 @@ export default function HelpAlert() {
             Start a{" "}
             <Link
                 target="_blank"
-                href="https://github.com/microsoft/jacdac/discussions"
+                href="https://github.com/jacdac/jacdac/discussions"
             >
                 GitHub Discussion
-            </Link>{" "}
-            or send us an email at jacdac-tap@microsoft.com.
+            </Link>
         </Alert>
     )
 }

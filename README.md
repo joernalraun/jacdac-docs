@@ -5,14 +5,14 @@
 This repository contains sources of [Jacdac](https://aka.ms/jacdac).
 
 -   [User Documentation](https://aka.ms/jacdac/)
--   Discussions at https://github.com/microsoft/jacdac/discussions
--   Issues are tracked on https://github.com/microsoft/jacdac/issues
+-   Discussions at https://github.com/jacdac/jacdac/discussions
+-   Issues are tracked on https://github.com/jacdac/jacdac/issues
 
 The rest of this page is for developers of the jacdac-ts library.
 
 ## Developer setup
 
--   Open this repository online at https://github.dev/microsoft/jacdac-docs
+-   Open this repository online at https://github.dev/jacdac/jacdac-docs
 
 All command line instructions assume a bash-like terminal.
 
@@ -22,7 +22,7 @@ On Windows, you may need to run these commands within Git Bash or Windows Subsys
 
 Edit this project directly from your browser using GitHub Codespaces. If you have access to them,
 
--   open project in a new codespace (https://github.dev/microsoft/jacdac-docs)
+-   open project in a new codespace (https://github.dev/jacdac/jacdac-docs)
 -   launch the docs server
 
 ```
@@ -78,22 +78,6 @@ run
 yarn buildspecs
 ```
 
-This script will update the directory jacdac-ts/jacdac-spec/dist as well as client bindings (for changes to a service or addition of a new service). In particular, the distribution will contain updates for 
-
-- jacdac-ts, which depends on jacdac-spec
-- jacdac-docs, which depends on jacdac-ts and many other repos
-- pxt-jacdac, the MakeCode extension for Jacdac.
-    - a new directory will be created for a newly added service. The directory will have the following files
-      - client.gts
-      - constants.ts
-      - pxt.g.json
-    - The above needs to be worked on to ensure it compiles with mkc. In particular
-      - cp pxt.g.json pxt.json
-      - mv client.gts to client.g.ts (this seems to be a bug in the jacdac-spec spectools code gen for STS)
-      - add a test file to pxt.json
-      - mkc init
-      - mkc build to ensure you get a hex file
-
 ### Docs build
 
 -   run the docs web site locally
@@ -147,7 +131,7 @@ https://makecode.com/multi?jacdac=1&localhost=1&beta=1
 
 ### Adding a new MakeCode client
 
-Create a new issue in https://github.com/microsoft/jacdac and select the `MakeCode client` template.
+Create a new issue in https://github.com/jacdac/jacdac and select the `MakeCode client` template.
 
 ### HTML tools
 
@@ -185,15 +169,3 @@ The releases are automatically created by the build system based on the title of
 -   `yarn watch`: Run `yarn build` in watch mode
 -   `yarn lint`: Lints code
 -   `yarn develop`: Launch docs web service
-
-## Microsoft Open Source Code of Conduct
-
-This project is hosted at https://github.com/microsoft/jacdac-ts.
-This project has adopted the
-[Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
-
-Resources:
-
--   [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/)
--   [Microsoft Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/)
--   Contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with questions or concerns
