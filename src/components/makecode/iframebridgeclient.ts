@@ -239,7 +239,7 @@ export class IFrameBridgeClient extends JDClient {
 
         const { data } = event
         const msg = data as PacketMessage
-        if (msg && msg.channel === "jacdac" && msg.type === "messagepacket") {
+        if (msg && msg.channel.includes("jacdac") && msg.type === "messagepacket") {
             this.handleMessageJacdac(msg)
         } else if (data?.source === "pxtdriver") {
             this.handleDriverMessage(data)
