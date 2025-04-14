@@ -109,12 +109,8 @@ async function createRedirects(actions) {
     const { createRedirect } = actions
     const rs = [
         {
-            fromPath: `/tools/module-tester`,
-            toPath: `/tools/device-tester`,
-        },
-        {
-            fromPath: `/clients/p5js`,
-            toPath: `/clients/javascript/p5js`,
+            fromPath: `/`,
+            toPath: `/tools/makecode-sim`,
         },
     ]
     rs.forEach(r => createRedirect(r))
@@ -407,48 +403,4 @@ exports.onCreateWebpackConfig = ({ stage, actions, getConfig }) => {
 
     // final webpack
     //console.log({ webpack: getConfig() })
-}
-
-// generate a full list of pages for compliance
-exports.onPostBuild = async ({ graphql }) => {
-    console.log(`compliance step`)
-    const { data } = await graphql(`
-        {
-            pages: allSitePage {
-                nodes {
-                    path
-                }
-            }
-        }
-    `)
-
-    await fs.writeFile(
-        path.resolve(__dirname, ".cache/all-pages.csv"),
-        data.pages.nodes
-            .map(
-                node =>
-                    `${
-                        "https://jacdac.github.io/jacdac-docs" + node.path
-                    }, ${node.path.slice(1)}`
-            )
-            .join("\n")
-    )
-
-    await fs.writeFile(
-        path.resolve(__dirname, ".cache/top-pages.csv"),
-        data.pages.nodes
-            .filter(
-                node =>
-                    node.path.slice(1).replace(/\/$/, "").split(/\//g).length <
-                        2 &&
-                    node.path.indexOf("offline-plugin-app-shell-fallback") < 0
-            )
-            .map(
-                node =>
-                    `${
-                        "https://jacdac.github.io/jacdac-docs" + node.path
-                    }, ${node.path.slice(1)}`
-            )
-            .join("\n")
-    )
 }
