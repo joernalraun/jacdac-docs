@@ -404,3 +404,7 @@ exports.onCreateWebpackConfig = ({ stage, actions, getConfig }) => {
     // final webpack
     //console.log({ webpack: getConfig() })
 }
+
+exports.onPostBuild = async ({ graphql }) => {
+
+}
