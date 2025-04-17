@@ -216,7 +216,11 @@ export const HostedSimulatorsProvider = ({ children }) => {
         const { data } = event
         const msg = data as PacketMessage
         const { channel, type, sender } = msg
-        if (channel && !channel.includes("jacdac") || type !== "messagepacket") return
+        if (
+            (channel && !channel.includes("jacdac")) ||
+            type !== "messagepacket"
+        )
+            return
         const sim = simulators.find(sim => sim.id === sender)
         if (!sim) return
 
