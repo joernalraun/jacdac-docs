@@ -2,7 +2,7 @@ const { identifierToUrlPath } = require(`./jacdac-ts/dist/jacdac.cjs`)
 
 const maxImageWidth = 800
 const siteUrl = "https://jacdac.github.io/pxt-jacdac/"
-const pathPrefix = "./pxt-jacdac"
+const pathPrefix = "."
 
 const wsl = !!process.env.WSL_DISTRO_NAME || !!process.env.CODESPACE_NAME
 const offline = !!process.env.JACDAC_OFFLINE
@@ -18,7 +18,7 @@ module.exports = {
         author: `Jacdac`,
         siteUrl: siteUrl,
     },
-    //pathPrefix: pathPrefix,
+    pathPrefix: pathPrefix,
     flags: {
         PRESERVE_FILE_DOWNLOAD_CACHE: true,
         DEV_WEBPACK_CACHE: true,
