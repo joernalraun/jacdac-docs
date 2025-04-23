@@ -110,7 +110,7 @@ async function createRedirects(actions) {
     const rs = [
         {
             fromPath: `/`,
-            toPath: `/tools/makecode-sim`,
+            toPath: `/pxt-jacdac/tools/makecode-sim`,
         },
     ]
     rs.forEach(r => createRedirect(r))
