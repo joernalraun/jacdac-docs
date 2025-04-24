@@ -105,16 +105,7 @@ async function createServicePages(graphql, actions, reporter) {
     })
 }
 
-async function createRedirects(actions) {
-    const { createRedirect } = actions
-    const rs = [
-        {
-            fromPath: `/`,
-            toPath: `/tools/makecode-sim`,
-        },
-    ]
-    rs.forEach(r => createRedirect(r))
-}
+
 
 async function createDeviceQRPages(actions) {
     console.log(`generating device QR pages`)
@@ -338,7 +329,6 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     //await createDeviceQRPages(actions, reporter)
     await createWorkers()
     await createVersions()
-    await createRedirects(actions)
 }
 
 exports.onCreateNode = ({ node, actions, getNode }) => {
