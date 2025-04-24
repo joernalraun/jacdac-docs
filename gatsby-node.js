@@ -382,9 +382,9 @@ exports.onCreateWebpackConfig = ({ stage, actions, getConfig }) => {
                 fallback,
             },
             plugins,
-            output: {
-                publicPath: "./"
-            }
+            //output: {
+            //    publicPath: "./"
+            //}
         })
     }
 
