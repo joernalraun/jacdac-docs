@@ -35,7 +35,7 @@ import { JDRegister } from "../../../jacdac-ts/src/jdom/register"
 import { randomDeviceId } from "../../../jacdac-ts/src/jdom/random"
 
 export interface PacketMessage {
-    channel: "jacdac"
+    channel: "jacdac/pxt-jacdac"
     type: "messagepacket"
     broadcast?: boolean
     data: Uint8Array
@@ -307,7 +307,7 @@ export class IFrameBridgeClient extends JDClient {
         pkt._jacdac_sender = this.bridgeId
         const msg: PacketMessage = {
             type: "messagepacket",
-            channel: "jacdac",
+            channel: "jacdac/pxt-jacdac",
             broadcast: true,
             data: pkt,
             sender: this.bridgeId,
