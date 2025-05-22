@@ -7,8 +7,8 @@ import React, {
 } from "react"
 import { DashboardServiceProps } from "./DashboardServiceWidget"
 import useServiceServer from "../hooks/useServiceServer"
-import { IndexedScreenServer } from "../../../jacdac-ts/src/servers/indexedscreenserver"
-import { CHANGE, IndexedScreenReg } from "../../../jacdac-ts/src/jdom/constants"
+import { BitmapServer } from "../../../jacdac-ts/src/servers/bitmapserver"
+import { BitmapReg, CHANGE } from "../../../jacdac-ts/src/jdom/constants"
 import useRegister from "../hooks/useRegister"
 import { useRegisterUnpackedValue } from "../../jacdac/useRegisterValue"
 import DashboardRegisterValueFallback from "./DashboardRegisterValueFallback"
@@ -18,25 +18,21 @@ import RegisterInput from "../RegisterInput"
 
 const MIN_OPACITY = 0.4
 
+// TODO: this needs to be completely rewritten in terms of the actual bitmap service!
 export default function DashboardBitmap(props: DashboardServiceProps) {
     const { service, visible, expanded } = props
     const id = useId()
     const { darkMode } = useContext(DarkModeContext)
-    const server = useServiceServer<IndexedScreenServer>(
+    const server = useServiceServer<BitmapServer>(
         service,
-        () => new IndexedScreenServer()
+        () => new BitmapServer()
     )
 
-    const widthRegister = useRegister(service, IndexedScreenReg.Width)
-    const heightRegister = useRegister(service, IndexedScreenReg.Height)
-    const brightnessRegister = useRegister(service, IndexedScreenReg.Brightness)
+    const widthRegister = useRegister(service, BitmapReg.Width)
+    const heightRegister = useRegister(service, BitmapReg.Height)
 
     const [width] = useRegisterUnpackedValue<[number]>(widthRegister, props)
     const [height] = useRegisterUnpackedValue<[number]>(heightRegister, props)
-    const [brightness = 1] = useRegisterUnpackedValue<[number]>(
-        brightnessRegister,
-        props
-    )
 
     const canvasRef = useRef<HTMLCanvasElement>()
     const contextRef = useRef<CanvasRenderingContext2D>()
