@@ -14,9 +14,6 @@ import { useRegisterUnpackedValue } from "../../jacdac/useRegisterValue"
 import DashboardRegisterValueFallback from "./DashboardRegisterValueFallback"
 import DarkModeContext from "../ui/DarkModeContext"
 import { Grid } from "@mui/material"
-import RegisterInput from "../RegisterInput"
-
-const MIN_OPACITY = 0.4
 
 // TODO: this needs to be completely rewritten in terms of the actual bitmap service!
 export default function DashboardBitmap(props: DashboardServiceProps) {
@@ -82,7 +79,7 @@ export default function DashboardBitmap(props: DashboardServiceProps) {
         )
 
     const canvasStyle: CSSProperties = {
-        opacity: MIN_OPACITY + brightness * (1 - MIN_OPACITY),
+        opacity: 1.0,
         border: "none",
         width: "100%",
         height: "100%",
@@ -106,15 +103,6 @@ export default function DashboardBitmap(props: DashboardServiceProps) {
                     <canvas id={id} ref={canvasRef} style={canvasStyle} />
                 </div>{" "}
             </Grid>
-            {expanded && (
-                <Grid item xs={12}>
-                    <RegisterInput
-                        register={brightnessRegister}
-                        visible={visible}
-                        showRegisterName={true}
-                    />
-                </Grid>
-            )}
         </>
     )
 }
