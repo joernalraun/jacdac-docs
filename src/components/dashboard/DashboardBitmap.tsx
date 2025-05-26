@@ -56,14 +56,14 @@ export default function DashboardBitmap(props: DashboardServiceProps) {
                 (contextRef.current = canvas.getContext("2d"))
             if (!context) return
 
-            const pixels = server?.pixels
+            const server_canvas = server?.canvas        
             context.clearRect(0, 0, canvas.width, canvas.height)
 
-            if (!pixels) {
+            if (!server_canvas) {
                 context.fillStyle = darkMode === "dark" ? "#999" : "#222"
                 context.fillRect(0, 0, canvas.width, canvas.height)
             } else {
-                context.putImageData(pixels, 0, 0)
+                context.drawImage(server_canvas, 0, 0)
             }
         }
 
