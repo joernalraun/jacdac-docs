@@ -168,7 +168,7 @@ function LayoutWithDarkMode(props: LayoutProps) {
     const { element, props: pageProps } = props
     const { pageContext, path } = pageProps
     const { frontmatter } = pageContext || {}
-    const makeCodeTool = /simx\/jacdac/.test(path)
+    const makeCodeTool = true
     const { fullScreen } = frontmatter || {
         fullScreen: makeCodeTool,
     }
@@ -218,7 +218,7 @@ function LayoutWithContext(props: LayoutProps) {
     const isHosted = UIFlags.hosted
     const footer = UIFlags.footer
     const tools = /^\/tools\//.test(path)
-    const makeCodeTool = /simx\/jacdac/.test(path)
+    const makeCodeTool = true
     const deviceScriptTool = /tools\/devicescript-/.test(path)
     const devicesPage = /^\/devices\/$/.test(path)
     const fullWidthTools =
