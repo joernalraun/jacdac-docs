@@ -325,7 +325,8 @@ async function createVersions() {
 exports.createPages = async ({ graphql, actions, reporter }) => {
     await generateServicesJSON()
     //await createServicePages(graphql, actions, reporter)
-    //await createDevicePages(graphql, actions, reporter)
+    // need device pages for the images in dashboard
+    await createDevicePages(graphql, actions, reporter)
     //await createDeviceQRPages(actions, reporter)
     await createWorkers()
     await createVersions()
