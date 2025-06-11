@@ -35,7 +35,7 @@ import { JDRegister } from "../../../jacdac-ts/src/jdom/register"
 import { randomDeviceId } from "../../../jacdac-ts/src/jdom/random"
 
 export interface PacketMessage {
-    channel: "jacdac/pxt-jacdac"
+    channel: "jacdac"
     type: "messagepacket"
     broadcast?: boolean
     data: Uint8Array
@@ -239,7 +239,7 @@ export class IFrameBridgeClient extends JDClient {
 
         const { data } = event
         const msg = data as PacketMessage
-        if (msg && msg.channel?.includes("jacdac") && msg.type === "messagepacket") {
+        if (msg.channel == "jacdac" && msg.type === "messagepacket") {
             this.handleMessageJacdac(msg)
         } else if (data?.source === "pxtdriver") {
             this.handleDriverMessage(data)
@@ -307,7 +307,7 @@ export class IFrameBridgeClient extends JDClient {
         pkt._jacdac_sender = this.bridgeId
         const msg: PacketMessage = {
             type: "messagepacket",
-            channel: "jacdac/pxt-jacdac",
+            channel: "jacdac",
             broadcast: true,
             data: pkt,
             sender: this.bridgeId,
