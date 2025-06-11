@@ -44,20 +44,6 @@
                         "workflows": "write"
                     }
                 },
-                "jacdac/jacdac-cli": {
-                    "permissions": {
-                        "contents": "write",
-                        "pull_requests": "write",
-                        "workflows": "write"
-                    }
-                },
-                "jacdac/pxt-jacdac": {
-                    "permissions": {
-                        "contents": "write",
-                        "pull_requests": "write",
-                        "workflows": "write"
-                    }
-                },
                 "jacdac/jacdac": {
                     "permissions": {
                         "contents": "write",
