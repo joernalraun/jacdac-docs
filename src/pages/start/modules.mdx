@@ -8,16 +8,19 @@ order: 5
 <DeviceImageList
     ids={[
         "kittenbot-keycapbuttonv10",
-        "kittenbot-lightsensorv10",
-        "kittenbot-rgbringv10",
+        "forward-education/phsensorv10",
+        "elecfreaks-jacdacledring8v10"",
     ]}
 />
 
 Jacdac modules have one more hardware components, represented by one or more Jacdac [services](/services),
 as well as one or more Jacdac [edge connectors](/start/edgeconnectors) to allow them to be connected
-to other modules, [brains](/start/brains), or [jacdaptors](/start/jacdaptors). We see three
-modules above, made by Kittenbot:
+to other modules, [brains](/start/brains), or [jacdaptors](/start/jacdaptors). We see 
+modules above, made by three different manufacturers:
 
--   the [Keycap Button](/devices/kittenbot/keycapbuttonv10/) is a **user input** module that hosts a button (and two edge connectors), represented in software by the [button](/services/button) service;
--   the [Light Sensor](/devices/kittenbot/lightsensorv10/) is a **sensor** module that hosts a light sensor, represented by the [light level](/services/lightlevel) service
--   the [RGB Ring](/devices/kittenbot/rgbringv10/): is a **user output** module hosting eight RGB LEDs, represented by the [LED](/service/led) service
+-   the [Keycap Button](/devices/kittenbot/keycapbuttonv10/) is a **user input** module that hosts a button (and two edge connectors), represented by the [button](/services/button) service;
+-   the [pH Sensor](/devices/forward-education/phsensorv10) is a **sensor** module that hosts a pH (acidity) sensor, represented by the [acidity](/services/acidityß) service
+-   the [RGB Ring](/devices/elecfreaks/jacdacledring8v10/): is a **user output** module hosting eight RGB LEDs, represented by the [LED](/service/led) service
+
+Modules include actuators as well as sensors, user input, and user output.
+
