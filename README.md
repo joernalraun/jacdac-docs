@@ -2,9 +2,9 @@
 
 **Jacdac** is a plug-and-play hardware and software stack for microcontrollers and their peripherals such as sensors and actuators. Jacdac is primarily designed for “modular electronics” scenarios that support rapid prototyping, creative exploration, making and learning through physical computing. Jacdac is designed to be cheap, flexible and extensible.
 
-This repository contains sources of [Jacdac](https://aka.ms/jacdac).
+This repository contains sources of [Jacdac](https://jacdac.github.io/jacdac-docs/).
 
--   [User Documentation](https://aka.ms/jacdac/)
+-   [User Documentation](https://jacdac.github.io/jacdac-docs/)
 -   Discussions at https://github.com/jacdac/jacdac/discussions
 -   Issues are tracked on https://github.com/jacdac/jacdac/issues
 
