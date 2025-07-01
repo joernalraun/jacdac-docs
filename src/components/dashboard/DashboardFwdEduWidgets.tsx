@@ -19,6 +19,8 @@ import {
     ReflectedLightServer,
     JDRegister,
     RotaryEncoderReg,
+    SRV_DC_CURRENT_MEASUREMENT,
+    SRV_DC_VOLTAGE_MEASUREMENT,
 } from "../../../jacdac-ts/src/jacdac"
 import { DashboardServiceProps } from "./DashboardServiceWidget"
 import useServiceServer from "../hooks/useServiceServer"
@@ -42,6 +44,8 @@ import FwdSonarWidget from "../widgets/FwdSonarWidget"
 import FwdTouchWidget from "../widgets/FwdTouchWidget"
 import useEvent from "../hooks/useEvent"
 import useSvgButtonProps from "../hooks/useSvgButtonProps"
+import FwdDcCurrentWidget from "../widgets/FwdDcCurrentWidget"
+import FwdDcVoltageWidget from "../widgets/FwdDcVoltageWidget"
 
 export function isFwdEdu(device: JDDevice): boolean {
     const FwdEduDevices = useDeviceSpecifications()
@@ -192,9 +196,16 @@ export function FwdEduSubstituteWidget(dashboardProps: DashboardServiceProps) {
                 ...widgetProps,
                 ...dialWidgetProps(value, service),
             })
-        // case SRV_RELAY:
-        // case SRV_SERVO:
-        // case SRV_LED:
+        case SRV_DC_CURRENT_MEASUREMENT:
+            return lazifyWidget(FwdDcCurrentWidget, {
+                ...widgetProps,
+                currentOrVoltage: "current",
+            })
+        case SRV_DC_VOLTAGE_MEASUREMENT:
+            return lazifyWidget(FwdDcVoltageWidget, {
+                ...widgetProps,
+                currentOrVoltage: "voltage",
+            })
         default:
             return DashboardServiceDefaultWidget(dashboardProps)
     }
