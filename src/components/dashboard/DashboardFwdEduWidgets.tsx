@@ -158,7 +158,7 @@ export function FwdEduSubstituteWidget(dashboardProps: DashboardServiceProps) {
 
     // semi-generics
     const registerNumber =
-        service.readingRegister.specification.identifier || 257
+        service?.readingRegister?.specification?.identifier || 257
     const valueReg = useRegister(service, registerNumber)
     const [value] = useRegisterUnpackedValue<[number]>(valueReg, dashboardProps)
     const widgetProps = { color: color, size: size, value: value }
