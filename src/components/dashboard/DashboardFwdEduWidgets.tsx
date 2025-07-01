@@ -21,6 +21,7 @@ import {
     RotaryEncoderReg,
     SRV_DC_CURRENT_MEASUREMENT,
     SRV_DC_VOLTAGE_MEASUREMENT,
+    SRV_ACIDITY,
 } from "../../../jacdac-ts/src/jacdac"
 import { DashboardServiceProps } from "./DashboardServiceWidget"
 import useServiceServer from "../hooks/useServiceServer"
@@ -46,6 +47,7 @@ import useEvent from "../hooks/useEvent"
 import useSvgButtonProps from "../hooks/useSvgButtonProps"
 import FwdDcCurrentWidget from "../widgets/FwdDcCurrentWidget"
 import FwdDcVoltageWidget from "../widgets/FwdDcVoltageWidget"
+import FwdPhWidget from "../widgets/FwdPhWidget"
 
 export function isFwdEdu(device: JDDevice): boolean {
     const FwdEduDevices = useDeviceSpecifications()
@@ -205,6 +207,11 @@ export function FwdEduSubstituteWidget(dashboardProps: DashboardServiceProps) {
             return lazifyWidget(FwdDcVoltageWidget, {
                 ...widgetProps,
                 currentOrVoltage: "voltage",
+            })
+        case SRV_ACIDITY:
+            return lazifyWidget(FwdPhWidget, {
+                ...widgetProps,
+                size: "clamp(14rem, 12vw, 16vh)",
             })
         default:
             return DashboardServiceDefaultWidget(dashboardProps)
