@@ -22,6 +22,7 @@ import {
     SRV_DC_CURRENT_MEASUREMENT,
     SRV_DC_VOLTAGE_MEASUREMENT,
     SRV_ACIDITY,
+    SRV_TEMPERATURE,
 } from "../../../jacdac-ts/src/jacdac"
 import { DashboardServiceProps } from "./DashboardServiceWidget"
 import useServiceServer from "../hooks/useServiceServer"
@@ -48,6 +49,7 @@ import useSvgButtonProps from "../hooks/useSvgButtonProps"
 import FwdDcCurrentWidget from "../widgets/FwdDcCurrentWidget"
 import FwdDcVoltageWidget from "../widgets/FwdDcVoltageWidget"
 import FwdPhWidget from "../widgets/FwdPhWidget"
+import FwdTemperatureWidget from "../widgets/FwdTemperatureWidget"
 
 export function isFwdEdu(device: JDDevice): boolean {
     const FwdEduDevices = useDeviceSpecifications()
@@ -210,6 +212,11 @@ export function FwdEduSubstituteWidget(dashboardProps: DashboardServiceProps) {
             })
         case SRV_ACIDITY:
             return lazifyWidget(FwdPhWidget, {
+                ...widgetProps,
+                size: "clamp(14rem, 12vw, 16vh)",
+            })
+        case SRV_TEMPERATURE:
+            return lazifyWidget(FwdTemperatureWidget, {
                 ...widgetProps,
                 size: "clamp(14rem, 12vw, 16vh)",
             })
