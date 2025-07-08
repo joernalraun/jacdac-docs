@@ -30,7 +30,6 @@ export default function ValueWithUnitWidget(props: {
     size?: string
     onChange?: (newValue: number) => void
 }) {
-    console.log("here")
     const { step, secondaryLabel, icon, unit, tabIndex, color, onChange } =
         props
     const {
