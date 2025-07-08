@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import SvgWidget from "./SvgWidget"
 import "./fwd-edu.css"
 import { Box, Slider } from "@mui/material"
@@ -12,13 +12,40 @@ export default function FwdLightsWidget(props: {
     const w = 418.06001
     const h = 345.2565
 
-    let output = "--"
-    let blockerY = 81
-    if (!isNaN(brightness)) {
-        const percent = Math.round((brightness / 0.0038909912109375) * 100)
-        output = percent.toString()
-        blockerY += (184 * percent) / 100
-        // y range is 81 to 265 for a difference of 184
+    const [sliderValue, setSliderValue] = useState(0)
+    const [output, setOutput] = useState("--")
+    const [blockerY, setBlockerY] = useState(81)
+
+    useEffect(() => {
+        let calculatedPercent = 0
+        let newBlockerY = 81
+
+        if (!isNaN(brightness)) {
+            calculatedPercent = Math.round(
+                (brightness / 0.0038909912109375) * 100
+            )
+            calculatedPercent = Math.min(100, Math.max(0, calculatedPercent))
+
+            // y range for blockerY is 81 to 265 for a difference of 184
+            newBlockerY += (184 * calculatedPercent) / 100
+        } else {
+            setOutput("--")
+            setSliderValue(0)
+            setBlockerY(81)
+            return
+        }
+
+        // Update the state variables
+        setSliderValue(calculatedPercent)
+        setOutput(calculatedPercent.toString())
+        setBlockerY(newBlockerY)
+    }, [brightness])
+
+    const handleChange = (event: Event, newValue: number) => {
+        setSliderValue(newValue)
+        setOutput(newValue.toString())
+        const newBlockerY = 81 + (184 * newValue) / 100
+        setBlockerY(newBlockerY)
     }
 
     return (
@@ -480,7 +507,7 @@ export default function FwdLightsWidget(props: {
                         </g>
                     </g>
                 </SvgWidget>
-                <Slider />
+                <Slider value={sliderValue} onChange={handleChange} />
             </Box>
         </Box>
     )
