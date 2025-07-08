@@ -23,6 +23,7 @@ import {
     SRV_DC_VOLTAGE_MEASUREMENT,
     SRV_ACIDITY,
     SRV_TEMPERATURE,
+    LightBulbReg,
 } from "../../../jacdac-ts/src/jacdac"
 import { DashboardServiceProps } from "./DashboardServiceWidget"
 import useServiceServer from "../hooks/useServiceServer"
@@ -50,6 +51,25 @@ import FwdDcCurrentWidget from "../widgets/FwdDcCurrentWidget"
 import FwdDcVoltageWidget from "../widgets/FwdDcVoltageWidget"
 import FwdPhWidget from "../widgets/FwdPhWidget"
 import FwdTemperatureWidget from "../widgets/FwdTemperatureWidget"
+import FwdFloatWidget from "../widgets/FwdFloatWidget"
+import FwdLightsWidget from "../widgets/FwdLightsWidget"
+
+enum ProductId {
+    BreakoutBoard1 = 873600795,
+    BreakoutBoard2 = 943529908,
+    LedRing = 1054009247,
+    FloatSensor = 884365778,
+    Dial = 932148851,
+    MoistureSensor = 870361737,
+    LineSensor = 1000568338,
+    TouchSensor = 1064434129,
+    EnergySensor = 919046000,
+    Lights = 827772839,
+    PhSensor = 1067983758,
+    SonarSensor = 926591985,
+    SolarSensor = 1005257879,
+    TemperatureSensor = 827772841,
+}
 
 export function isFwdEdu(device: JDDevice): boolean {
     const FwdEduDevices = useDeviceSpecifications()
@@ -61,14 +81,6 @@ export function isFwdEdu(device: JDDevice): boolean {
         .flatMap(device => device.productIdentifiers)
     const deviceId = useDeviceProductIdentifier(device)
     return FwdEduDevices.includes(deviceId)
-}
-
-function isRotaryVariant(service: JDService): boolean {
-    return (
-        service.serviceIndex > 1 &&
-        service.device.serviceClassAt(service.serviceIndex - 1) ==
-            SRV_ROTARY_ENCODER
-    )
 }
 
 function buttonWidgetProps(service: JDService, server?: ButtonServer) {
@@ -141,16 +153,6 @@ export function lazifyWidget(widget, widgetProps) {
 
 export function FwdEduSubstituteWidget(dashboardProps: DashboardServiceProps) {
     const { service } = dashboardProps
-    switch (service.serviceClass) {
-        case SRV_RELAY:
-            return createPumpWidget(dashboardProps)
-        case SRV_SERVO:
-            return createServoWidget(dashboardProps)
-        case SRV_LED:
-            return createLEDWidget(dashboardProps)
-        default:
-            break
-    }
 
     const server = useServiceServer(service)
     const color = server ? "secondary" : ("primary" as "primary" | "secondary")
@@ -163,29 +165,39 @@ export function FwdEduSubstituteWidget(dashboardProps: DashboardServiceProps) {
     const [value] = useRegisterUnpackedValue<[number]>(valueReg, dashboardProps)
     const widgetProps = { color: color, size: size, value: value }
 
-    switch (service.serviceClass) {
-        case SRV_DISTANCE:
-            return lazifyWidget(FwdSonarWidget, {
-                color: widgetProps.color,
-                value: widgetProps.value * 100,
-                size: "clamp(6rem, 15vw, 20vh",
+    const productId = useDeviceProductIdentifier(service.device)
+
+    switch (productId) {
+        case ProductId.BreakoutBoard1:
+        case ProductId.BreakoutBoard2:
+            if (service.serviceClass === SRV_SERVO) {
+                return createServoWidget(dashboardProps)
+            }
+            return createPumpWidget(dashboardProps)
+        case ProductId.LedRing:
+            return createLEDWidget(dashboardProps)
+        case ProductId.FloatSensor:
+            return lazifyWidget(FwdFloatWidget, {
+                ...widgetProps,
+                ...buttonWidgetProps(service, server as ButtonServer),
             })
-        case SRV_LIGHT_LEVEL:
-            return lazifyWidget(FwdSolarWidget, widgetProps)
-        case SRV_SOIL_MOISTURE:
+        case ProductId.Dial:
+            if (service.serviceClass === SRV_BUTTON) {
+                return lazifyWidget(FwdDialButtonWidget, {
+                    ...widgetProps,
+                    ...buttonWidgetProps(service, server as ButtonServer),
+                })
+            }
+            return lazifyWidget(FwdDialWidget, {
+                ...widgetProps,
+                ...dialWidgetProps(value, service),
+            })
+        case ProductId.MoistureSensor:
             return lazifyWidget(FwdSoilMoistureWidget, {
                 ...widgetProps,
                 size: "clamp(14rem, 12vw, 16vh)",
             })
-        case SRV_BUTTON:
-            return lazifyWidget(
-                isRotaryVariant(service) ? FwdDialButtonWidget : FwdTouchWidget,
-                {
-                    ...widgetProps,
-                    ...buttonWidgetProps(service, server as ButtonServer),
-                }
-            )
-        case SRV_REFLECTED_LIGHT:
+        case ProductId.LineSensor:
             return lazifyWidget(FwdLineWidget, {
                 ...widgetProps,
                 size: "clamp(4rem, 8vw, 12vh)",
@@ -195,32 +207,53 @@ export function FwdEduSubstituteWidget(dashboardProps: DashboardServiceProps) {
                     server as ReflectedLightServer
                 ),
             })
-        case SRV_ROTARY_ENCODER:
-            return lazifyWidget(FwdDialWidget, {
+        case ProductId.TouchSensor:
+            return lazifyWidget(FwdTouchWidget, {
                 ...widgetProps,
-                ...dialWidgetProps(value, service),
+                ...buttonWidgetProps(service, server as ButtonServer),
             })
-        case SRV_DC_CURRENT_MEASUREMENT:
-            return lazifyWidget(FwdDcCurrentWidget, {
-                ...widgetProps,
-                currentOrVoltage: "current",
-            })
-        case SRV_DC_VOLTAGE_MEASUREMENT:
+        case ProductId.EnergySensor:
+            if (service.serviceClass === SRV_DC_CURRENT_MEASUREMENT) {
+                return lazifyWidget(FwdDcCurrentWidget, {
+                    ...widgetProps,
+                    currentOrVoltage: "current",
+                })
+            }
             return lazifyWidget(FwdDcVoltageWidget, {
                 ...widgetProps,
                 currentOrVoltage: "voltage",
             })
-        case SRV_ACIDITY:
+        case ProductId.Lights: {
+            const brightnessRegister = useRegister(
+                service,
+                LightBulbReg.Brightness
+            )
+            const [brightness] = useRegisterUnpackedValue<[number]>(
+                brightnessRegister,
+                dashboardProps
+            )
+            return lazifyWidget(FwdLightsWidget, {
+                brightness,
+            })
+        }
+        case ProductId.PhSensor:
             return lazifyWidget(FwdPhWidget, {
                 ...widgetProps,
                 size: "clamp(14rem, 12vw, 16vh)",
             })
-        case SRV_TEMPERATURE:
+        case ProductId.SonarSensor:
+            return lazifyWidget(FwdSonarWidget, {
+                color: widgetProps.color,
+                value: widgetProps.value * 100,
+                size: "clamp(6rem, 15vw, 20vh",
+            })
+        case ProductId.SolarSensor:
+            return lazifyWidget(FwdSolarWidget, widgetProps)
+        case ProductId.TemperatureSensor:
             return lazifyWidget(FwdTemperatureWidget, {
                 ...widgetProps,
                 size: "clamp(14rem, 12vw, 16vh)",
             })
-        default:
-            return DashboardServiceDefaultWidget(dashboardProps)
     }
+    return DashboardServiceDefaultWidget(dashboardProps)
 }
