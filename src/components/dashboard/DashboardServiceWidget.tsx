@@ -56,7 +56,10 @@ import {
 import { JDService } from "../../../jacdac-ts/src/jdom/service"
 import { CircularProgress, SvgIconProps } from "@mui/material"
 
-import { FwdEduSubstituteWidget, isFwdEdu } from "./DashboardFwdEduWidgets"
+import {
+    FwdEduSubstituteWidget,
+    hasCustomFwdWidget,
+} from "./DashboardFwdEduWidgets"
 
 // bundled
 import DashboardButton from "./DashboardButton"
@@ -187,7 +190,7 @@ const serviceViews: {
     [SRV_INDEXED_SCREEN]: {
         component: DashboardIndexedScreen,
         weight: () => 3,
-        expandable: true
+        expandable: true,
     },
     [SRV_LED]: {
         component: DashboardLED,
@@ -403,7 +406,7 @@ export default function DashboardServiceWidget(
         serviceViews[specification.classIdentifier] || {}
     const server = useServiceServer(service)
     const color = server ? "secondary" : "primary"
-    const useFwdWidget = isFwdEdu(service.device)
+    const useFwdWidget = hasCustomFwdWidget(service.device)
 
     // for FwdEdu widgets that replace Default widgets
     if (useFwdWidget) return createElement(FwdEduSubstituteWidget, props)

@@ -1,18 +1,10 @@
 import React, { createElement, useState, useEffect } from "react"
 import useDeviceProductIdentifier from "../../jacdac/useDeviceProductIdentifier"
-import useDeviceSpecifications from "../devices/useDeviceSpecifications"
 import {
     JDDevice,
     JDService,
-    SRV_DISTANCE,
-    SRV_LIGHT_LEVEL,
-    SRV_SOIL_MOISTURE,
     SRV_BUTTON,
-    SRV_ROTARY_ENCODER,
-    SRV_RELAY,
-    SRV_REFLECTED_LIGHT,
     SRV_SERVO,
-    SRV_LED,
     EVENT,
     ButtonEvent,
     ButtonServer,
@@ -20,10 +12,6 @@ import {
     JDRegister,
     RotaryEncoderReg,
     SRV_DC_CURRENT_MEASUREMENT,
-    SRV_DC_VOLTAGE_MEASUREMENT,
-    SRV_ACIDITY,
-    SRV_TEMPERATURE,
-    LightBulbReg,
 } from "../../../jacdac-ts/src/jacdac"
 import { DashboardServiceProps } from "./DashboardServiceWidget"
 import useServiceServer from "../hooks/useServiceServer"
@@ -53,7 +41,6 @@ import FwdDcVoltageWidget from "../widgets/FwdDcVoltageWidget"
 import FwdPhWidget from "../widgets/FwdPhWidget"
 import FwdTemperatureWidget from "../widgets/FwdTemperatureWidget"
 import FwdFloatWidget from "../widgets/FwdFloatWidget"
-import FwdLightsWidget from "../widgets/FwdLightsWidget"
 
 enum ProductId {
     BreakoutBoard1 = 873600795,
@@ -72,16 +59,10 @@ enum ProductId {
     TemperatureSensor = 827772841,
 }
 
-export function isFwdEdu(device: JDDevice): boolean {
-    const FwdEduDevices = useDeviceSpecifications()
-        .filter(
-            device =>
-                device?.productIdentifiers &&
-                device.company.match(/(fwd|forward) ?edu(cation)?/i)
-        )
-        .flatMap(device => device.productIdentifiers)
-    const deviceId = useDeviceProductIdentifier(device)
-    return FwdEduDevices.includes(deviceId)
+export function hasCustomFwdWidget(device: JDDevice): boolean {
+    const productId = useDeviceProductIdentifier(device)
+    const productIds = Object.values(ProductId) as number[]
+    return productIds.includes(productId)
 }
 
 function buttonWidgetProps(service: JDService, server?: ButtonServer) {
