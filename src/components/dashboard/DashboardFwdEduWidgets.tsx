@@ -35,6 +35,7 @@ import { CircularProgress } from "@mui/material"
 
 import {
     createLEDWidget,
+    createLightsWidget,
     createPumpWidget,
     createServoWidget,
 } from "./DashboardFwdUniqueComponents"
@@ -176,6 +177,9 @@ export function FwdEduSubstituteWidget(dashboardProps: DashboardServiceProps) {
             return createPumpWidget(dashboardProps)
         case ProductId.LedRing:
             return createLEDWidget(dashboardProps)
+        case ProductId.Lights: {
+            return createLightsWidget(dashboardProps)
+        }
         case ProductId.FloatSensor:
             return lazifyWidget(FwdFloatWidget, {
                 ...widgetProps,
@@ -223,19 +227,6 @@ export function FwdEduSubstituteWidget(dashboardProps: DashboardServiceProps) {
                 ...widgetProps,
                 currentOrVoltage: "voltage",
             })
-        case ProductId.Lights: {
-            const brightnessRegister = useRegister(
-                service,
-                LightBulbReg.Brightness
-            )
-            const [brightness] = useRegisterUnpackedValue<[number]>(
-                brightnessRegister,
-                dashboardProps
-            )
-            return lazifyWidget(FwdLightsWidget, {
-                brightness,
-            })
-        }
         case ProductId.PhSensor:
             return lazifyWidget(FwdPhWidget, {
                 ...widgetProps,

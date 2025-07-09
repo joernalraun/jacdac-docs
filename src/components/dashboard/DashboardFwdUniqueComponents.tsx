@@ -11,6 +11,7 @@ import {
     LedReg,
     bufferEq,
     JDEventSource,
+    LightBulbReg,
 } from "../../../jacdac-ts/src/jacdac"
 import { DashboardServiceProps } from "./DashboardServiceWidget"
 import useServiceServer from "../hooks/useServiceServer"
@@ -20,7 +21,7 @@ import {
     useRegisterBoolValue,
     useRegisterUnpackedValue,
 } from "../../jacdac/useRegisterValue"
-import { FormControlLabel, Grid, Slider, Switch } from "@mui/material"
+import { FormControlLabel, Grid, Slider, Switch, Box } from "@mui/material"
 
 import FwdLEDWidget from "../widgets/FwdLEDWidget"
 import FwdPumpWidget from "../widgets/FwdPumpWidget"
@@ -29,6 +30,45 @@ import DashboardRegisterValueFallback from "./DashboardRegisterValueFallback"
 import SwitchWithLabel from "../ui/SwitchWithLabel"
 import useChange from "../../jacdac/useChange"
 import ColorButtons from "../widgets/ColorButtons"
+import FwdLightsWidget from "../widgets/FwdLightsWidget"
+
+export function createLightsWidget(props: DashboardServiceProps) {
+    const { service } = props
+    const brightnessRegister = useRegister(service, LightBulbReg.Brightness)
+    const [brightness] = useRegisterUnpackedValue<[number]>(
+        brightnessRegister,
+        props
+    )
+
+    let percentBrightness = 0
+    if (!isNaN(brightness)) {
+        percentBrightness = Math.round((brightness / 0.0038909912109375) * 100)
+        percentBrightness = Math.min(100, Math.max(0, percentBrightness))
+    }
+
+    const handleBrightnessChange = (ev: unknown, newValue: number) => {
+        const rawBrightness = (newValue / 100) * 0.0038909912109375
+        brightnessRegister.sendSetPackedAsync([rawBrightness], true)
+    }
+
+    return (
+        <Box
+            sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+            }}
+        >
+            <Box sx={{ width: "80%" }}>
+                <FwdLightsWidget percentBrightness={percentBrightness} />
+                <Slider
+                    value={percentBrightness}
+                    onChange={handleBrightnessChange}
+                />
+            </Box>
+        </Box>
+    )
+}
 
 export function createPumpWidget(props: DashboardServiceProps) {
     const { service } = props
