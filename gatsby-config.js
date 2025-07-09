@@ -18,8 +18,7 @@ module.exports = {
         author: `Jacdac`,
         siteUrl: siteUrl,
     },
-    basePath: siteUrl + pathPrefix,
-    // pathPrefix: pathPrefix,
+    pathPrefix: pathPrefix,
     flags: {
         PRESERVE_FILE_DOWNLOAD_CACHE: true,
         DEV_WEBPACK_CACHE: true,
