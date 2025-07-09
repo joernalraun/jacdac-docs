@@ -3,8 +3,11 @@ import SvgWidget from "./SvgWidget"
 import "./fwd-edu.css"
 import useThrottledValue from "../hooks/useThrottledValue"
 
-export default function FwdLightsWidget(props: { percentBrightness: number }) {
-    const { percentBrightness } = props
+export default function FwdLightsWidget(props: {
+    percentBrightness: number
+    noReading: boolean
+}) {
+    const { percentBrightness, noReading } = props
 
     const w = 418.06001
     const h = 345.2565
@@ -52,7 +55,7 @@ export default function FwdLightsWidget(props: { percentBrightness: number }) {
                     fontWeight="700"
                     textAnchor="middle"
                 >
-                    {percentBrightness}%
+                    {noReading ? "--" : percentBrightness}%
                 </text>
                 <text
                     transform="translate(225.0679 186.52623)"

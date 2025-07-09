@@ -41,7 +41,10 @@ export function createLightsWidget(props: DashboardServiceProps) {
     )
 
     let percentBrightness = 0
-    if (!isNaN(brightness)) {
+    let noReading = false
+    if (isNaN(brightness)) {
+        noReading = true
+    } else {
         percentBrightness = Math.round((brightness / 0.0038909912109375) * 100)
         percentBrightness = Math.min(100, Math.max(0, percentBrightness))
     }
@@ -60,7 +63,10 @@ export function createLightsWidget(props: DashboardServiceProps) {
             }}
         >
             <Box sx={{ width: "80%" }}>
-                <FwdLightsWidget percentBrightness={percentBrightness} />
+                <FwdLightsWidget
+                    percentBrightness={percentBrightness}
+                    noReading={noReading}
+                />
                 <Slider
                     value={percentBrightness}
                     onChange={handleBrightnessChange}
