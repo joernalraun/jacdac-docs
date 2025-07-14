@@ -14,9 +14,11 @@ as a running example.
 
 Once your PR has been merged, the following set of assets will be automatically created
 for your service:
-- a set of TypeScript definitions for your service in the file 
-- a dot H file for the service
-- a MakeCode client for the service
+- a set of TypeScript definitions for your service in the file, including the following
+  - a definition of the service class number (`SRV_BUTTON`)
+  - enums for all the service members, including registers, commands and events  
+- a C include file ([button.h](https://github.com/jacdac/jacdac/blob/main/dist/c/button.h))
+- a MakeCode extension providing a service client ([pxt-jacdac/button](https://github.com/jacdac/pxt-jacdac/tree/master/button))
 
 The other required assets that need to be created for the service include:
 - a TypeScript server written against the [JDOM](/clients/javascript)
