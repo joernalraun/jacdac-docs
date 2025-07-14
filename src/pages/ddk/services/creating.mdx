@@ -14,14 +14,14 @@ as a running example.
 
 Once your PR has been merged, the following set of assets will be automatically created
 for your service:
-- a set of TypeScript definitions for your service in the file, including the following
-  - a definition of the service class number (`SRV_BUTTON`)
-  - enums for all the service members, including registers, commands and events  
+- a set of TypeScript definitions for your service in the file [jacdac/dist/specconstants.ts](https://github.com/jacdac/jacdac/blob/main/dist/specconstants.ts), including the following
+  - a definition of the service class number: `export const SRV_BUTTON = 0x1473a263`
+  - enums/namespaces for all the service members, including registers, commands and events  
 - a C include file ([button.h](https://github.com/jacdac/jacdac/blob/main/dist/c/button.h))
 - a MakeCode extension providing a service client ([pxt-jacdac/button](https://github.com/jacdac/pxt-jacdac/tree/master/button))
 
 The other required assets that need to be created for the service include:
-- a TypeScript server written against the [JDOM](/clients/javascript)
+- a TypeScript server ([jacdac-ts/src/servers/buttonserver/ts](https://github.com/jacdac/jacdac-ts/blob/main/src/servers/buttonserver.ts))
 - a React component based on the TypeScript server, which will support both device twins and simulators
 - firmware for a server in C using [jacdac-c](https://github.com/jacdac/jacdac-c)
 - tests for the service, written using the TypeScript test framework
@@ -30,11 +30,16 @@ We will add code generation for more assets soon.
 
 ## A TypeScript server
 
+A [Jacdac server](???)
+
 - a server in TypeScript using the [JDOM](/clients/javascript)
+- the server needs to be added to [jacdac-ts/src/servers/servers.ts](C:/github/org/jacdac/jacdac-docs/jacdac-ts/src/servers/servers.ts)
 
 ## React-based component (device twin and simulator)
 
 ## Tests
+
+[testdom/testrules](https://github.com/jacdac/jacdac-ts/blob/main/src/testdom/testrules.ts)
 
 ## MakeCode Client
 
