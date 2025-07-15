@@ -28,12 +28,42 @@ The other required assets that need to be created for the service include:
 
 We will add code generation for more assets soon.
 
-## A TypeScript server
+## A TypeScript virtual server
 
-A [Jacdac server](???)
+A [server](/reference/clientserver/)
+makes one or more sensors and/or actuators available to other devices on the Jacdac bus. To support simulation of a service, you must develop a **virtual server** residing in [jacdac-ts/src/servers](https://github.com/jacdac/jacdac-ts/blob/main/src/servers). The new service and its binding to the server must be added to the factory in [jacdac-ts/src/servers/servers.ts](https://github.com/jacdac/jacdac-ts/blob/main/src/servers/servers.ts).
 
-- a server in TypeScript using the [JDOM](/clients/javascript)
-- the server needs to be added to [jacdac-ts/src/servers/servers.ts](C:/github/org/jacdac/jacdac-docs/jacdac-ts/src/servers/servers.ts)
+The button service's virtual server is at [jacdac-ts/src/servers/buttonserver.ts](https://github.com/jacdac/jacdac-ts/blob/main/src/servers/buttonserver.ts).
+It inherits from the base class `SensorServer` in
+[jacdac-ts/src/servers/sensorserver.ts](https://github.com/jacdac/jacdac-ts/blob/main/src/servers/sensorserver.ts),
+which makes use of various classes in the Jacdac object model (e.g. `JDServiceServer`, `JDRegisterServer`):
+
+```
+export class SensorServer<TReading extends PackedValues,> extends JDServiceServer {
+    readonly reading: JDRegisterServer<TReading>
+    readonly readingError: JDRegisterServer<TReading>
+    readonly streamingSamples: JDRegisterServer<[number]>
+    readonly streamingInterval: JDRegisterServer<[number]>
+    readonly preferredStreamingInterval: JDRegisterServer<[number]>
+
+```
+
+The server uses the Jacdac object model to handle requests
+for getting and setting register's values. It models hardware
+using methods that can be invoked from outside, as with the button being held down or let up:
+
+```
+    async down() {
+        this.reading.setValues([ButtonServer.ACTIVE_VALUE])
+    }
+
+    async up() {
+        this.reading.setValues([ButtonServer.INACTIVE_VALUE])
+    }
+```
+
+Such methods will be called from the React component.
+
 
 ## React-based component (device twin and simulator)
 
