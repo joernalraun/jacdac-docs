@@ -135,16 +135,20 @@ The Jacdac dashboard is integrated into MakeCode using its
 [third-party simulator extension](https://github.com/microsoft/pxt-simx-sample) mechanism.
 This mechanism ties together the GitHub repo of the extension
 (https://github.com/jacdac/pxt-jacdac) with the content of the
-web site that will be served by MakeCode via proxy, which
-is copied from a SHA at the `gh-pages` branch of the extension's repo.
-The SHA is specified in the entry for `jacdac/pxt-jacdac` in 
-[targetconfig.json](https://github.com/microsoft/pxt-microbit/blob/master/targetconfig.json). 
+web site for the dashboard. MakeCode copies the site 
+from a SHA at the `gh-pages` branch of the extension's repo
+and serves the copy of that site.
+The SHA is specified in the entry for `jacdac/pxt-jacdac` in
+[targetconfig.json](https://github.com/microsoft/pxt-microbit/blob/master/targetconfig.json).
+Thus, for any update to the dashboard to be visible in MakeCode requires
+updating the site and the SHA.
 
 Local development with MakeCode against the dashboard does not use the
-proxy. Instead, the `devUrl` field should be set to
+site from the SHA. Instead, the `devUrl` field should be set to
 https://jacdac.github.io/jacdac-docs/tools/makecode-sim/, which
 is build from this repo (main branch).  You must add the query
-parameter `simxdev=1` to the MakeCode URL to activate.
+parameter `simxdev=1` to the MakeCode URL to activate. You can also
+host a local version of the dashboard and specify that in the `devURL`.
 
 Because `jacdac-docs` uses Gatsby, which uses root relative addressing,
 we must build the `gh-pages` for `jacdac/pxt-jacdac` using a different
