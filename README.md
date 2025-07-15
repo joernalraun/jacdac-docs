@@ -8,7 +8,7 @@ This repository contains sources of [Jacdac](https://jacdac.github.io/jacdac-doc
 -   Discussions at https://github.com/jacdac/jacdac/discussions
 -   Issues are tracked on https://github.com/jacdac/jacdac/issues
 
-The rest of this page is for developers of the jacdac-ts library.
+The rest of this page is for developers of jacdac-docs.
 
 ## Developer setup
 
@@ -115,7 +115,7 @@ yarn clean
 
 ### Jacdac + MakeCode
 
-### Local build
+#### Local build
 
 Run this command to rebuild the makecode packages
 
@@ -129,9 +129,31 @@ Open the multi editor to test MakeCode devices with the Jacdac view. You can sel
 
 https://makecode.com/multi?jacdac=1&localhost=1&beta=1
 
-### Adding a new MakeCode client
+#### Building the Jacdac dashboard for jacdac/pxt-jacdac
 
-Create a new issue in https://github.com/jacdac/jacdac and select the `MakeCode client` template.
+The Jacdac dashboard is integrated into MakeCode using its
+[third-party simulator extension](https://github.com/microsoft/pxt-simx-sample) mechanism.
+This mechanism ties together the GitHub repo of the extension
+(https://github.com/jacdac/pxt-jacdac) with the content of the
+web site that will be served by MakeCode via proxy, which
+is copied from a SHA at the `gh-pages` branch of the extension's repo.
+The SHA is specified in the entry for `jacdac/pxt-jacdac` in 
+[targetconfig.json](https://github.com/microsoft/pxt-microbit/blob/master/targetconfig.json). 
+
+Local development with MakeCode against the dashboard does not use the
+proxy. Instead, the `devUrl` field should be set to
+https://jacdac.github.io/jacdac-docs/tools/makecode-sim/, which
+is build from this repo (main branch).  You must add the query
+parameter `simxdev=1` to the MakeCode URL to activate.
+
+Because `jacdac-docs` uses Gatsby, which uses root relative addressing,
+we must build the `gh-pages` for `jacdac/pxt-jacdac` using a different
+path than for https://jacdac.github.io/jacdac-docs/tools/makecode-sim/.
+
+The `makecodesim` branch of this repo is used for this purpose,
+via GitHub workflow in `jacdac/pxt-jacdac` (see [buildsim.yml](https://github.com/jacdac/pxt-jacdac/blob/master/.github/workflows/buildsim.yml)). This branch 
+contains just the dashboard and must be kept up-to-date with 
+code changes to the main repo.
 
 ### HTML tools
 
