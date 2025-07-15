@@ -1,5 +1,5 @@
 ---
-title: Creating a Jacdac Service
+title: Creating a Service
 ---
 
 To create a service, please start as follows: 
@@ -31,7 +31,12 @@ We will add code generation for more assets soon.
 ## A TypeScript virtual server
 
 A [server](/reference/clientserver/)
-makes one or more sensors and/or actuators available to other devices on the Jacdac bus. To support simulation of a service, you must develop a **virtual server** residing in [jacdac-ts/src/servers](https://github.com/jacdac/jacdac-ts/blob/main/src/servers). The new service and its binding to the server must be added to the factory in [jacdac-ts/src/servers/servers.ts](https://github.com/jacdac/jacdac-ts/blob/main/src/servers/servers.ts).
+makes one or more sensors and/or actuators available to other devices on the Jacdac bus. 
+
+To support simulation of a service, you must develop a **virtual server** residing in 
+[jacdac-ts/src/servers](https://github.com/jacdac/jacdac-ts/blob/main/src/servers). 
+The new service and its binding to the server must be added to the factory in 
+[jacdac-ts/src/servers/servers.ts](https://github.com/jacdac/jacdac-ts/blob/main/src/servers/servers.ts).
 
 The button service's virtual server is at [jacdac-ts/src/servers/buttonserver.ts](https://github.com/jacdac/jacdac-ts/blob/main/src/servers/buttonserver.ts).
 It inherits from the base class `SensorServer` in
@@ -62,10 +67,25 @@ using methods that can be invoked from outside, as with the button being held do
     }
 ```
 
-Such methods will be called from the React component.
-
+Such methods will be called from the React component. There are many other virtual servers
+available in [jacdac-ts/src/servers](https://github.com/jacdac/jacdac-ts/blob/main/src/servers). 
+Feel free to copy one that will help you get started.
 
 ## React-based component (device twin and simulator)
+
+Each service is represented by a React component that can be incorporated into the Jacdac
+dashboard, which can be embedded in a web page. [jacdac-docs/src/components/dashboard/DashboardButton.tsx](https://github.com/jacdac/jacdac-docs/blob/main/src/components/dashboard/DashboardButton.tsx) is the React component
+corresponding to the button service.
+
+The React component should be designed to act as both
+- a device twin of a real Jacdac device's service on the Jacdac bus; in the case of a button, this means that the twin shows the state of the button (down or up) but does not let the user interact with the twin
+- a simulator (service widget) of a virtual server of a service; in the case case of a button, this means that the simulator shows the state of the button and let's the user press it (which calls the `down()` method) and release it (which calls the `up()` method)
+
+If you inspect the code for `DashboardButton.tsx` you will see its logic
+depends on whether or not a server is available.
+
+The service widget factory for creating simulators/twins is at [jacdac-docs/src/components/dashboard/DashboardServiceWidget.tsx](https://github.com/jacdac/jacdac-docs/blob/main/src/components/dashboard/DashboardServiceWidget.tsx)
+
 
 ## Tests
 
