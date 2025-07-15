@@ -144,8 +144,8 @@ Thus, for any update to the dashboard to be visible in MakeCode requires
 updating the site and the SHA.
 
 Local development with MakeCode against the dashboard does not use the
-site from the SHA. Instead, the `devUrl` field should be set to
-https://jacdac.github.io/jacdac-docs/tools/makecode-sim/, which
+site from the SHA. Instead, the `devUrl` field (in `targetconfig.json`)
+should be set to https://jacdac.github.io/jacdac-docs/tools/makecode-sim/, which
 is build from this repo (main branch).  You must add the query
 parameter `simxdev=1` to the MakeCode URL to activate. You can also
 host a local version of the dashboard and specify that in the `devURL`.
@@ -153,7 +153,6 @@ host a local version of the dashboard and specify that in the `devURL`.
 Because `jacdac-docs` uses Gatsby, which uses root relative addressing,
 we must build the `gh-pages` for `jacdac/pxt-jacdac` using a different
 path than for https://jacdac.github.io/jacdac-docs/tools/makecode-sim/.
-
 The `makecodesim` branch of this repo is used for this purpose,
 via GitHub workflow in `jacdac/pxt-jacdac` (see [buildsim.yml](https://github.com/jacdac/pxt-jacdac/blob/master/.github/workflows/buildsim.yml)). This branch 
 contains just the dashboard and must be kept up-to-date with 

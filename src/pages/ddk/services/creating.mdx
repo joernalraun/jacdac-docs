@@ -38,6 +38,8 @@ To support simulation of a service, you must develop a **virtual server** residi
 The new service and its binding to the server must be added to the factory in 
 [jacdac-ts/src/servers/servers.ts](https://github.com/jacdac/jacdac-ts/blob/main/src/servers/servers.ts).
 
+**TODO**: simple sensors can just be defined using data (no new file/class needed)
+
 The button service's virtual server is at [jacdac-ts/src/servers/buttonserver.ts](https://github.com/jacdac/jacdac-ts/blob/main/src/servers/buttonserver.ts).
 It inherits from the base class `SensorServer` in
 [jacdac-ts/src/servers/sensorserver.ts](https://github.com/jacdac/jacdac-ts/blob/main/src/servers/sensorserver.ts),
@@ -84,20 +86,23 @@ The React component should be designed to act as both
 If you inspect the code for `DashboardButton.tsx` you will see its logic
 depends on whether or not a server is available.
 
-The service widget factory for creating simulators/twins is at [jacdac-docs/src/components/dashboard/DashboardServiceWidget.tsx](https://github.com/jacdac/jacdac-docs/blob/main/src/components/dashboard/DashboardServiceWidget.tsx)
-
+The service widget factory for creating simulators/twins is at [jacdac-docs/src/components/dashboard/DashboardServiceWidget.tsx](https://github.com/jacdac/jacdac-docs/blob/main/src/components/dashboard/DashboardServiceWidget.tsx). You must add an entry there as well.
 
 ## Tests
 
-[testdom/testrules](https://github.com/jacdac/jacdac-ts/blob/main/src/testdom/testrules.ts)
+It's important to develop automated/manual tests for your service, which
+are then made available via the [Jacdac device tester](https://jacdac.github.io/jacdac-docs/tools/device-tester/). You can find examples at [testdom/testrules](https://github.com/jacdac/jacdac-ts/blob/main/src/testdom/testrules.ts).
 
 ## MakeCode Client
 
+TBD
+
 # Firmware for server
 
-If you need to implement a new service, we again recommend that you start with an existing service
-implementation, as found in the [services directory](https://github.com/jacdac/jacdac-c/tree/main/services)
+Find existing firmware for services 
+in the [services directory](https://github.com/jacdac/jacdac-c/tree/main/services)
 of the jacdac-c repo:
+* [services/button.c](https://github.com/jacdac/jacdac-c/tree/main/services/button.c) is the C code for the button service
 * [services/servo.c](https://github.com/jacdac/jacdac-c/tree/main/services/servo.c) has a simple example of registers
 * [services/buzzer.c](https://github.com/jacdac/jacdac-c/tree/main/services/buzzer.c) has a simple example of how a command is handled (in `buzzer_handle_packet()`)
 * [services/thermometer.c](https://github.com/jacdac/jacdac-c/tree/main/services/thermometer.c) is a very simple sensor
