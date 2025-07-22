@@ -2,6 +2,9 @@
 title: Creating a Service
 ---
 
+
+## Creating a Service
+
 To create a service, please start as follows: 
 - copy and edit an [existing](https://github.com/jacdac/jacdac/tree/main/services)
   service specification in the [service editor](/tools/service-editor/)
@@ -21,7 +24,7 @@ for your service:
 - a MakeCode extension providing a service client ([pxt-jacdac/button](https://github.com/jacdac/pxt-jacdac/tree/master/button))
 
 The other required assets that need to be created for the service include:
-- a TypeScript server ([jacdac-ts/src/servers/buttonserver/ts](https://github.com/jacdac/jacdac-ts/blob/main/src/servers/buttonserver.ts))
+- a TypeScript server ([jacdac-ts/src/servers/buttonserver.ts](https://github.com/jacdac/jacdac-ts/blob/main/src/servers/buttonserver.ts))
 - a React component based on the TypeScript server, which will support both device twins and simulators
 - firmware for a server in C using [jacdac-c](https://github.com/jacdac/jacdac-c)
 - tests for the service, written using the TypeScript test framework
@@ -45,7 +48,7 @@ It inherits from the base class `SensorServer` in
 [jacdac-ts/src/servers/sensorserver.ts](https://github.com/jacdac/jacdac-ts/blob/main/src/servers/sensorserver.ts),
 which makes use of various classes in the Jacdac object model (e.g. `JDServiceServer`, `JDRegisterServer`):
 
-```
+```ts
 export class SensorServer<TReading extends PackedValues,> extends JDServiceServer {
     readonly reading: JDRegisterServer<TReading>
     readonly readingError: JDRegisterServer<TReading>
@@ -59,7 +62,7 @@ The server uses the Jacdac object model to handle requests
 for getting and setting register's values. It models hardware
 using methods that can be invoked from outside, as with the button being held down or let up:
 
-```
+```ts
     async down() {
         this.reading.setValues([ButtonServer.ACTIVE_VALUE])
     }
@@ -97,7 +100,7 @@ and accompanying React component. Let's consider the [temperature service](https
 which supports both indoor and outdoor variants, as specified in [jacdac-ts/src/servers/sensorserver.ts](https://github.com/jacdac/jacdac-ts/blob/main/src/servers/sensorserver.ts). We show the code that supports the outdoor variant:
 
 
-```
+```ts
 function initProviders() {
     return (_providerDefinitions =
         _providerDefinitions ||
