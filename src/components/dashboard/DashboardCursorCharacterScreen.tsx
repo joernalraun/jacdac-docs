@@ -11,9 +11,16 @@ import CmdButton from "../CmdButton"
 import ClearIcon from "@mui/icons-material/Clear"
 import CharacterScreenWidget from "../widgets/CharacterScreenWidget"
 import DashboardRegisterValueFallback from "./DashboardRegisterValueFallback"
+import { CursorCharacterScreenServer } from "../../../jacdac-ts/src/servers/cursorcharscreenserver"
+import useServiceServer from "../hooks/useServiceServer"
 
 export default function DashboardCursorCharacterScreen(props: DashboardServiceProps) {
     const { service, expanded } = props
+
+    const server = useServiceServer<CursorCharacterScreenServer>(
+        service,
+        () => new CursorCharacterScreenServer()
+    )
 
     const messageRegister = useRegister(service, CursorCharacterScreenReg.Message)
     const rowsRegister = useRegister(service, CursorCharacterScreenReg.Rows)
@@ -49,15 +56,22 @@ export default function DashboardCursorCharacterScreen(props: DashboardServicePr
         if (!fieldMessage && message) setFieldMessage(message)
     }, [message])
 
+    // listen for clear command
+    useEffect(
+        () =>
+            server.subscribe(CursorCharacterScreenServer.CLEAR, () => {
+                // TODO: this won't work because of interaction with cursor
+                setFieldMessage("")
+            }),
+        [server]
+    )
+
     if (rows === undefined || columns === undefined)
         return (
             <DashboardRegisterValueFallback
                 register={rows === undefined ? rowsRegister : columnsRegister}
             />
         ) // size unknown
-
-    const converter: (s: string) => string = s => s
-    const cmessage = message?.split("").map(converter).join("")
 
     return (
         <Grid container spacing={1}>
@@ -89,8 +103,10 @@ export default function DashboardCursorCharacterScreen(props: DashboardServicePr
                     rows={rows}
                     columns={columns}
                     rtl={false}
-                    message={cmessage}
+                    message={message}
                     disabled={enabled === 0}
+                    cursorX={server.cursorX}
+                    cursorY={server.cursorY}
                 />
             </Grid>
         </Grid>

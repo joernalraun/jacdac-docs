@@ -8,8 +8,10 @@ export default function CharacterScreenWidget(props: {
     message: string
     rtl?: boolean
     disabled?: boolean
+    cursorX?: number
+    cursorY?: number
 }) {
-    const { rows, columns, message, rtl, disabled } = props
+    const { rows, columns, message, rtl, disabled, cursorX, cursorY } = props
     const { textPrimary, background, controlBackground } =
         useWidgetTheme("primary")
     const cw = 8
@@ -24,11 +26,14 @@ export default function CharacterScreenWidget(props: {
     const lines = (message || "").split(/\n/g)
     const els: JSX.Element[] = []
 
+    const startCol = cursorX ? cursorX : 0
+    const startRow = cursorY ? cursorY : 0
+
     let y = mo
-    for (let row = 0; row < rows; ++row) {
+    for (let row = startRow; row < rows; ++row) {
         let x = mo
         const line = lines[row]
-        for (let column = 0; column < columns; ++column) {
+        for (let column = startCol; column < columns; ++column) {
             const char = line?.[rtl ? columns - 1 - column : column]
             els.push(
                 <g key={`${row}-${column}`}>
