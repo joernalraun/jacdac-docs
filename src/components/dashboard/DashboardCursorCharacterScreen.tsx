@@ -22,46 +22,38 @@ export default function DashboardCursorCharacterScreen(props: DashboardServicePr
         () => new CursorCharacterScreenServer()
     )
 
-    const messageRegister = useRegister(service, CursorCharacterScreenReg.Message)
     const rowsRegister = useRegister(service, CursorCharacterScreenReg.Rows)
     const columnsRegister = useRegister(service, CursorCharacterScreenReg.Columns)
-    const enabledRegister = useRegister(
-        service,
-        CursorCharacterScreenReg.Enabled
-    )
-    const [message] = useRegisterUnpackedValue<[string]>(messageRegister, props)
+    const enabledRegister = useRegister(service,CursorCharacterScreenReg.Enabled)
     const [rows] = useRegisterUnpackedValue<[number]>(rowsRegister, props)
     const [columns] = useRegisterUnpackedValue<[number]>(columnsRegister, props)
-
     const [enabled] = useRegisterUnpackedValue<[number]>(
         enabledRegister,
         props
     )
 
-    const [fieldMessage, setFieldMessage] = useState(message)
+    const [screen, setScreen] = useState<string>(server.screen)
+
+    const [fieldMessage, setFieldMessage] = useState(screen)
 
     const handleClear = async () => {
         setFieldMessage("")
-        await messageRegister.sendSetStringAsync("", true)
+        server.clear()
     }
+
     const handleFieldMessageChange = async (
         ev: ChangeEvent<HTMLTextAreaElement>
     ) => {
         setFieldMessage(ev.target.value)
-        await messageRegister.sendSetStringAsync(ev.target.value, true)
+        server.clear()
+        server.show(ev.target.value)
     }
-
-    // set first value of message
-    useEffect(() => {
-        if (!fieldMessage && message) setFieldMessage(message)
-    }, [message])
 
     // listen for clear command
     useEffect(
         () =>
-            server.subscribe(CursorCharacterScreenServer.CLEAR, () => {
-                // TODO: this won't work because of interaction with cursor
-                setFieldMessage("")
+            server.subscribe(CursorCharacterScreenServer.UPDATE, () => {
+                setScreen(server.screen)
             }),
         [server]
     )
@@ -103,10 +95,8 @@ export default function DashboardCursorCharacterScreen(props: DashboardServicePr
                     rows={rows}
                     columns={columns}
                     rtl={false}
-                    message={message}
+                    message={screen}
                     disabled={enabled === 0}
-                    cursorX={server.cursorX}
-                    cursorY={server.cursorY}
                 />
             </Grid>
         </Grid>
