@@ -52,6 +52,7 @@ import {
     SRV_GPIO,
     SRV_ROS,
     SRV_INDEXED_SCREEN,
+    SRV_CURSOR_CHARACTER_SCREEN,
 } from "../../../jacdac-ts/src/jdom/constants"
 import { JDService } from "../../../jacdac-ts/src/jdom/service"
 import { CircularProgress, SvgIconProps } from "@mui/material"
@@ -81,6 +82,9 @@ const DashboardRoleManager = lazy(() => import("./DashboardRoleManager"))
 const DashboardTrafficLight = lazy(() => import("./DashboardTrafficLight"))
 const DashboardCharacterScreen = lazy(
     () => import("./DashboardCharacterScreen")
+)
+const DashboardCursorCharacterScreen = lazy(
+    () => import("./DashboardCursorCharacterScreen")
 )
 const DashboardBrailleDisplay = lazy(() => import("./DashboardBrailleDisplay"))
 const DashboardRainGauge = lazy(() => import("./DashboardRainGauge"))
@@ -223,6 +227,11 @@ const serviceViews: {
     },
     [SRV_CHARACTER_SCREEN]: {
         component: DashboardCharacterScreen,
+        weight: () => 3,
+        expandable: true,
+    },
+    [SRV_CURSOR_CHARACTER_SCREEN]: {
+        component: DashboardCursorCharacterScreen,
         weight: () => 3,
         expandable: true,
     },
