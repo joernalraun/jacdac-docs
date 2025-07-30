@@ -7,6 +7,13 @@ import FilterChip from "../ui/FilterChip"
 import DeviceSpecificationList from "./DeviceSpecificationList"
 import ServiceSpecificationSelect from "./ServiceSpecificationSelect"
 
+// TODO
+// 1. things with Jacdac connectors that are available for purchase
+// - kits
+// - brains
+// - adapters
+// - modules
+
 export default function FilteredDeviceSpecificationList(props: {
     showSearch?: boolean
     showServiceList?: boolean
@@ -72,20 +79,6 @@ export default function FilteredDeviceSpecificationList(props: {
                         />
                     </Grid>
                 )}
-                <Grid item>
-                    <FilterChip
-                        label="firmware code"
-                        value={firmwareSources}
-                        onClick={handleSetFirmwareSources}
-                    />
-                </Grid>
-                <Grid item>
-                    <FilterChip
-                        label="hardware design"
-                        value={hardwareDesign}
-                        onClick={handleSetHardwareDesign}
-                    />
-                </Grid>
                 {tags
                     ?.filter(t => t !== "ec30")
                     .map(tag => (
@@ -103,18 +96,6 @@ export default function FilteredDeviceSpecificationList(props: {
                 query={query}
                 buyNow={true}
                 connector={"jacdac"}
-                firmwareSources={firmwareSources}
-                hardwareDesign={hardwareDesign}
-                serviceClass={serviceClass}
-                tags={selectedTags}
-            />
-            <div style={{ marginTop: "5rem" }} />
-            <DeviceSpecificationList
-                {...others}
-                header={"Grove, Qwiic, STEMMA QT connectors"}
-                query={query}
-                buyNow={true}
-                connector={"grove"}
                 firmwareSources={firmwareSources}
                 hardwareDesign={hardwareDesign}
                 serviceClass={serviceClass}
