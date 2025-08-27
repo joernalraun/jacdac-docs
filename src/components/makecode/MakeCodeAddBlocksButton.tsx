@@ -5,6 +5,7 @@ import useChange from "../../jacdac/useChange"
 import IFrameBridgeClient from "./iframebridgeclient"
 import MakeCodeIcon from "../../components/icons/MakeCodeIcon"
 import useBus from "../../jacdac/useBus"
+import { translations } from "./translations"
 
 export default function MakeCodeAddBlocksButton() {
     const bus = useBus()
@@ -21,18 +22,16 @@ export default function MakeCodeAddBlocksButton() {
     )
     const isButtonEnabled = !!extensions?.length
 
-    //TODO: i18n
-    const enabledTooltip =
-        "Add blocks for your connected and simulated devices to the modules drawer"
-    const disabledTooltip =
-        "This button becomes available if you have devices connected that don't have their matching blocks added to the 'Modules' drawer"
+    // Example: get language from browser or default to English
+    const lang = typeof navigator !== "undefined" ? navigator.language.slice(0, 2) : "en"
+    const t = translations[lang] || translations.en
 
     if (!isMakeCodeTool) return null
 
     return (
         <Tooltip
             describeChild
-            title={isButtonEnabled ? enabledTooltip : disabledTooltip}
+            title={isButtonEnabled ? t.enabledTooltip : t.disabledTooltip}
             placement="bottom"
         >
             <span>
@@ -45,7 +44,7 @@ export default function MakeCodeAddBlocksButton() {
                     startIcon={<MakeCodeIcon />}
                     onClick={handleAdd}
                 >
-                    Add blocks
+                    {t.addBlocks}
                 </Button>
             </span>
         </Tooltip>
