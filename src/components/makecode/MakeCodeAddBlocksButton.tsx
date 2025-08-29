@@ -5,7 +5,7 @@ import useChange from "../../jacdac/useChange"
 import IFrameBridgeClient from "./iframebridgeclient"
 import MakeCodeIcon from "../../components/icons/MakeCodeIcon"
 import useBus from "../../jacdac/useBus"
-import { translateLang } from "./translations"
+import { translateLang } from "../translations"
 
 export default function MakeCodeAddBlocksButton() {
     const bus = useBus()

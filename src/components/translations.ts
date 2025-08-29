@@ -1,5 +1,9 @@
 const translations = {
     en: {
+        simulators: "Simulators",
+        devices: "Devices",
+        autoStart: "Auto start",
+        clearSimulators: "clear simulators",
         blockAdd: "Add blocks",
         blockEnabled: "Add blocks for your connected and simulated devices to the modules drawer",
         blockDisabled: "This button becomes available if you have devices connected that don't have their matching blocks added to the 'Modules' drawer",
@@ -8,6 +12,10 @@ const translations = {
         simDisabled: "This button becomes available if there are Roles without assignable devices",
     },
     de: {
+        simulators: "Simulatoren",
+        devices: "Geräte",
+        autoStart: "Automatisch starten",
+        clearSimulators: "Simulatoren löschen",
         blockAdd: "Blöcke hinzufügen",
         blockEnabled: "Fügen Sie Blöcke für Ihre verbundenen und simulierten Geräte zur Modulauswahl hinzu",
         blockDisabled: "Diese Schaltfläche wird verfügbar, wenn Sie Geräte verbunden haben, für die noch keine passenden Blöcke zur 'Module'-Leiste hinzugefügt wurden",

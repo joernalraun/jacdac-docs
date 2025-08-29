@@ -4,7 +4,7 @@ import useRoleManagerClient from "../services/useRoleManagerClient"
 import useChange from "../../jacdac/useChange"
 import CmdButton from "../CmdButton"
 import { delay } from "../../../jacdac-ts/src/jdom/utils"
-import { translateLang } from "../makecode/translations"
+import { translateLang } from "../translations"
 
 export default function StartMissingSimulatorsButton(props: {
     variant?: "contained" | "outlined"

@@ -38,6 +38,7 @@ import DialogTitleWithClose from "../ui/DialogTitleWithClose"
 import useKeyboardNavigationProps from "../hooks/useKeyboardNavigationProps"
 import useSnackbar from "../hooks/useSnackbar"
 import useBus from "../../jacdac/useBus"
+import { JDBus } from "../../../jacdac-ts/src/jacdac"
 
 const miniSearchOptions = {
     fields: ["name", "description"],
@@ -47,6 +48,27 @@ const miniSearchOptions = {
         boost: { name: 5, description: 1 },
     },
 }
+
+function uniqueServiceProviderDefinitionsFromCatalog(bus: JDBus) {
+    const seen: ServiceProviderDefinition[] = []
+    const deviceSpecs = bus.deviceCatalog.specifications()
+    for (const devSpec of deviceSpecs) {
+        // find a matching service provider definition 
+        // that contains all the services in the devSpec
+        const matchingProviders = serviceProviderDefinitions().filter(sp =>
+            devSpec.services?.every(svc =>
+                sp.serviceClasses.includes(svc)
+            )
+        )
+        for (const provider of matchingProviders) {
+            if (!seen.includes(provider)) {
+                seen.push(provider)
+            }
+        }
+    }
+    return seen
+}
+
 export default function StartSimulatorDialog(props: {
     open: boolean
     onClose: () => void
@@ -72,7 +94,7 @@ export default function StartSimulatorDialog(props: {
         simulator?: HostedSimulatorDefinition
     }[] = useMemo(
         () => [
-            ...serviceProviderDefinitions()
+            ...uniqueServiceProviderDefinitionsFromCatalog(bus)
                 .filter(
                     server =>
                         !sensor ||
