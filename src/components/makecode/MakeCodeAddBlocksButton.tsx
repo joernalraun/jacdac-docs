@@ -5,7 +5,7 @@ import useChange from "../../jacdac/useChange"
 import IFrameBridgeClient from "./iframebridgeclient"
 import MakeCodeIcon from "../../components/icons/MakeCodeIcon"
 import useBus from "../../jacdac/useBus"
-import { translations } from "./translations"
+import { translateLang } from "./translations"
 
 export default function MakeCodeAddBlocksButton() {
     const bus = useBus()
@@ -22,16 +22,12 @@ export default function MakeCodeAddBlocksButton() {
     )
     const isButtonEnabled = !!extensions?.length
 
-    // Example: get language from browser or default to English
-    const lang = typeof navigator !== "undefined" ? navigator.language.slice(0, 2) : "en"
-    const t = translations[lang] || translations.en
-
     if (!isMakeCodeTool) return null
 
     return (
         <Tooltip
             describeChild
-            title={isButtonEnabled ? t.enabledTooltip : t.disabledTooltip}
+            title={translateLang(isButtonEnabled ? "blockEnabled" : "blockDisabled")}
             placement="bottom"
         >
             <span>
@@ -44,7 +40,7 @@ export default function MakeCodeAddBlocksButton() {
                     startIcon={<MakeCodeIcon />}
                     onClick={handleAdd}
                 >
-                    {t.addBlocks}
+                    {translateLang("blockAdd")}
                 </Button>
             </span>
         </Tooltip>
