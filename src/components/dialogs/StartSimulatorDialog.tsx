@@ -39,6 +39,7 @@ import useKeyboardNavigationProps from "../hooks/useKeyboardNavigationProps"
 import useSnackbar from "../hooks/useSnackbar"
 import useBus from "../../jacdac/useBus"
 import { JDBus } from "../../../jacdac-ts/src/jacdac"
+import { translateLang } from "../translations"
 
 const miniSearchOptions = {
     fields: ["name", "description"],
@@ -186,14 +187,14 @@ export default function StartSimulatorDialog(props: {
             scroll="paper"
         >
             <DialogTitleWithClose onClose={onClose} id={deviceHostLabelId}>
-                Start a simulator
+                {translateLang("startAsimulator")}
             </DialogTitleWithClose>
             <DialogContent ref={contentRef}>
                 <TextField
                     tabIndex={0}
                     id={searchId}
                     sx={{ mt: "8px" }}
-                    label="Filter simulators"
+                    label={translateLang("filterSimulators")}
                     inputProps={{
                         "aria-label": "Filter textbox for simulators",
                     }}
