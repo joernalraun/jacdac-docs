@@ -50,9 +50,6 @@ const miniSearchOptions = {
     },
 }
 
-// TODO
-// 1. remove brains (like micro:bit V2)
-// 2. exact match on services and numbers
 function uniqueServiceProviderDefinitionsFromCatalog(bus: JDBus) {
     const seen: ServiceProviderDefinition[] = []
     const deviceSpecs = bus.deviceCatalog.specifications()
@@ -61,10 +58,9 @@ function uniqueServiceProviderDefinitionsFromCatalog(bus: JDBus) {
         // that contains all the services in the devSpec
         const matchingProviders = serviceProviderDefinitions().filter(sp =>
             !devSpec.tags?.includes("brain") &&
+            (devSpec.hardwareTags ? devSpec.hardwareTags.includes(sp.name): true) &&
             devSpec.services?.length === sp.services().length &&           
-            devSpec.services?.every(svc =>
-                sp.serviceClasses.includes(svc)
-            ) &&
+            devSpec.services?.every(svc => sp.serviceClasses.includes(svc)) &&
             sp.serviceClasses.every(sc => devSpec.services?.includes(sc))
         )
         for (const provider of matchingProviders) {
