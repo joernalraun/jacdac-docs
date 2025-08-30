@@ -39,7 +39,7 @@ import useKeyboardNavigationProps from "../hooks/useKeyboardNavigationProps"
 import useSnackbar from "../hooks/useSnackbar"
 import useBus from "../../jacdac/useBus"
 import { JDBus } from "../../../jacdac-ts/src/jacdac"
-import { translateLang } from "../translations"
+import { translateLang, translateServer } from "../translations"
 
 const miniSearchOptions = {
     fields: ["name", "description"],
@@ -50,7 +50,10 @@ const miniSearchOptions = {
     },
 }
 
+let serviceProviderDefinitionsCache: ServiceProviderDefinition[] = null
 function uniqueServiceProviderDefinitionsFromCatalog(bus: JDBus) {
+    if (serviceProviderDefinitionsCache)
+        return serviceProviderDefinitionsCache
     const seen: ServiceProviderDefinition[] = []
     const deviceSpecs = bus.deviceCatalog.specifications()
     for (const devSpec of deviceSpecs) {
@@ -69,6 +72,7 @@ function uniqueServiceProviderDefinitionsFromCatalog(bus: JDBus) {
             }
         }
     }
+    serviceProviderDefinitionsCache = seen
     return seen
 }
 
@@ -222,7 +226,7 @@ export default function StartSimulatorDialog(props: {
                             }
                             {...keyboardProps}
                         >
-                            {name}
+                            {translateServer(name)}
                         </ListItem>
                     ))}
                 </List>
