@@ -71,18 +71,19 @@ const translate_servers = {
         "rotary potentiometer": "Drehpotentiometer",
         "slider (potentiometer)": "Schieberegler (Potentiometer)",
         "Hall sensor (potentiometer)": "Hallsensor (Potentiometer)",
-        "distance (sonar)": "Entfernung (Sonar)",
+        "distance (sonar)": "Entfernung (Ultraschall)",
         "DC current/voltage measurement": "Gleichstrom-/Spannungsmessung",
         "light bulb": "Glühbirne",
         "line sensor (3x digital)": "Liniensensor (3x digital)",
         "soil moisture": "Bodenfeuchtigkeit",
         "water acidity (pH)": "Wasser-Säuregehalt (pH)",
         "thermometer (outdoor)": "Thermometer (außen)",
-        "thermometer (indoor)": "Thermometer (innen)",
+        "thermometer (soil)": "Thermometer (Boden)",
         "thermometer (medical)": "Thermometer (medizinisch)",
         "buzzer": "Summer",
         "motion": "Bewegung",
         "UV index": "UV-Index",
+        "light bulb (dimmeable)": "Glühbirne (dimmbar)",
     }
 }
 
