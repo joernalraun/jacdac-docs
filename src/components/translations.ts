@@ -1,4 +1,4 @@
-import { filter } from "@tidyjs/tidy"
+import queryString from 'query-string'
 
 const translations = {
     en: {
@@ -41,9 +41,17 @@ const translations = {
     },
 }
 
-export function translateLang(key: string) {
+function getLang() {
+    const qs = queryString.parse(location.search)
+    if (qs.language && typeof qs.language === "string" )
+        return qs.language
     const lang =
         typeof navigator !== "undefined" ? navigator.language.slice(0, 2) : "en"
+    return lang    
+}
+
+export function translateLang(key: string) {
+    const lang = getLang()
     return translations[lang]?.[key] || translations.en[key]
 }
 
@@ -87,8 +95,7 @@ const translate_servers = {
 }
 
 export function translateServer(name: string) {
-    const lang =
-        typeof navigator !== "undefined" ? navigator.language.slice(0, 2) : "en"
+    const lang = getLang()
     if (lang === "en") return name
     if (translate_servers[lang]) {
         return translate_servers[lang][name] || name
