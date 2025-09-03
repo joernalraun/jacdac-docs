@@ -113,7 +113,7 @@ export default function StartSimulatorDialog(props: {
                 )
                 .map(server => ({
                     id: `server:${server.name}`,
-                    name: server.name,
+                    name: translateServer(server.name),
                     description: server.serviceClasses
                         .map(serviceSpecificationFromClassIdentifier)
                         .map(
@@ -226,7 +226,7 @@ export default function StartSimulatorDialog(props: {
                             }
                             {...keyboardProps}
                         >
-                            {translateServer(name)}
+                            {name}
                         </ListItem>
                     ))}
                 </List>
