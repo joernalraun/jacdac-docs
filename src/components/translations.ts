@@ -1,7 +1,16 @@
+import { orange } from '@mui/material/colors'
 import queryString from 'query-string'
 
 const translations = {
     en: {
+        active: "active",
+        inactive: "inactive",
+        on: "on",
+        off: "off",
+        red: "red",
+        yellow: "yellow",
+        green: "green",
+        orange: "orange",
         simulators: "Simulators",
         devices: "Devices",
         autoStart: "Auto start",
@@ -21,6 +30,14 @@ const translations = {
             "This button becomes available if there are Roles without assignable devices",
     },
     de: {
+        active: "aktiv",
+        inactive: "inaktiv",
+        on: "an",
+        off: "aus",
+        red: "rot",
+        yellow: "gelb",
+        green: "grün",
+        orange: "orange",
         simulators: "Simulatoren",
         devices: "Geräte",
         autoStart: "Automatisch starten",
