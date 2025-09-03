@@ -2,6 +2,25 @@ import queryString from 'query-string'
 
 const translations = {
     en: {
+        active: "active",
+        inactive: "inactive",
+        on: "on",
+        off: "off",
+        red: "red",
+        yellow: "yellow",
+        green: "green",
+        orange: "orange",
+        text: "text",
+        intensity: "intensity",
+        clearDisplay: "clear the entire display",
+        vibrate: "vibrate",
+        vibrationPattern: "vibration pattern",
+        sendVibPattern: "send vibration pattern",
+        patternVibrations: "Pattern of vibrations",
+        patternTooLong: "Pattern too long",
+        maximum: "maximum",
+        pressVibrate: "Press VIBRATE to enable sound playback.",
+        clickActivateSounds: "Click to activate sounds",
         simulators: "Simulators",
         devices: "Devices",
         autoStart: "Auto start",
@@ -21,6 +40,25 @@ const translations = {
             "This button becomes available if there are Roles without assignable devices",
     },
     de: {
+        active: "aktiv",
+        inactive: "inaktiv",
+        on: "an",
+        off: "aus",
+        red: "rot",
+        yellow: "gelb",
+        green: "grün",
+        orange: "orange",
+        text: "Text",
+        intensity: "Intensität",
+        clearDisplay: "Anzeige löschen",
+        vibrate: "vibrieren",
+        vibrationPattern: "Vibrationsmuster",
+        sendVibPattern: "Vibrationsmuster senden",
+        patternVibrations: "Muster der Vibrationen",
+        patternTooLong: "Muster zu lang",
+        maximum: "Maximum",
+        pressVibrate: "Drücken Sie VIBRATE, um die Soundwiedergabe zu aktivieren.",
+        clickActivateSounds: "Klicken Sie, um Sounds zu aktivieren",
         simulators: "Simulatoren",
         devices: "Geräte",
         autoStart: "Automatisch starten",
@@ -50,7 +88,7 @@ function getLang() {
     return lang    
 }
 
-export function translateLang(key: string) {
+export function tL(key: string) {
     const lang = getLang()
     return translations[lang]?.[key] || translations.en[key]
 }
