@@ -1,5 +1,3 @@
-import { IntegrationInstructions } from '@mui/icons-material'
-import { orange } from '@mui/material/colors'
 import queryString from 'query-string'
 
 const translations = {
