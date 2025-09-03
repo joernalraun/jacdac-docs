@@ -13,7 +13,7 @@ import ButtonWidget from "../widgets/ButtonWidget"
 import useRegister from "../hooks/useRegister"
 import OptionalTooltip from "../widgets/OptionalTooltip"
 import DashboardRegisterValueFallback from "./DashboardRegisterValueFallback"
-import { translateLang } from "../translations"
+import { tL } from "../translations"
 
 export default function DashboardSwitch(props: DashboardServiceProps) {
     const { service } = props
@@ -43,7 +43,7 @@ export default function DashboardSwitch(props: DashboardServiceProps) {
                     <ButtonWidget
                         checked={on}
                         color={color}
-                        label={translateLang(on ? "active" : "inactive")}
+                        label={tL(on ? "active" : "inactive")}
                         onDown={server && handleToggle}
                         size={widgetSize}
                     />
@@ -60,7 +60,7 @@ export default function DashboardSwitch(props: DashboardServiceProps) {
                             onChange={server && handleToggle}
                         />
                     </OptionalTooltip>
-                    <label id={labelId}>{translateLang(on ? "on" : "off")}</label>
+                    <label id={labelId}>{tL(on ? "on" : "off")}</label>
                 </>
             )
     }

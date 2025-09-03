@@ -7,7 +7,7 @@ import SwitchWithLabel from "../ui/SwitchWithLabel"
 import useWidgetTheme from "../widgets/useWidgetTheme"
 import DashboardRegisterValueFallback from "./DashboardRegisterValueFallback"
 import { DashboardServiceProps } from "./DashboardServiceWidget"
-import { translateLang } from "../translations"
+import { tL } from "../translations"
 
 export default function DashboardRelay(props: DashboardServiceProps) {
     const { service } = props
@@ -28,7 +28,7 @@ export default function DashboardRelay(props: DashboardServiceProps) {
     }
     return (
         <SwitchWithLabel
-            label={translateLang(active ? "active" : "inactive")}
+            label={tL(active ? "active" : "inactive")}
             checked={active}
             onChange={handleClose}
             labelStyle={labelStyle}

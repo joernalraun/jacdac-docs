@@ -1,3 +1,4 @@
+import { IntegrationInstructions } from '@mui/icons-material'
 import { orange } from '@mui/material/colors'
 import queryString from 'query-string'
 
@@ -11,6 +12,16 @@ const translations = {
         yellow: "yellow",
         green: "green",
         orange: "orange",
+        text: "text",
+        intensity: "intensity",
+        clearDisplay: "clear the entire display",
+        vibrate: "vibrate",
+        vibrationPattern: "vibration pattern",
+        sendVibPattern: "send vibration pattern",
+        patternVibrations: "Pattern of vibrations",
+        patternTooLong: "Pattern too long",
+        maximum: "maximum",
+        pressVibrate: "Press VIBRATE to enable sound playback.",
         simulators: "Simulators",
         devices: "Devices",
         autoStart: "Auto start",
@@ -38,6 +49,16 @@ const translations = {
         yellow: "gelb",
         green: "grün",
         orange: "orange",
+        text: "Text",
+        intensity: "Intensität",
+        clearDisplay: "Anzeige löschen",
+        vibrate: "vibrieren",
+        vibrationPattern: "Vibrationsmuster",
+        sendVibPattern: "Vibrationsmuster senden",
+        patternVibrations: "Muster der Vibrationen",
+        patternTooLong: "Muster zu lang",
+        maximum: "Maximum",
+        pressVibrate: "Drücken Sie VIBRATE, um die Soundwiedergabe zu aktivieren.",
         simulators: "Simulatoren",
         devices: "Geräte",
         autoStart: "Automatisch starten",
@@ -67,7 +88,7 @@ function getLang() {
     return lang    
 }
 
-export function translateLang(key: string) {
+export function tL(key: string) {
     const lang = getLang()
     return translations[lang]?.[key] || translations.en[key]
 }
